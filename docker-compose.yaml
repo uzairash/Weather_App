@@ -1,0 +1,5 @@
+services:
+  weather_app:
+    image: uzair102/u_repo:weather_app-v1.1
+    ports:
+      - 4042:3000
