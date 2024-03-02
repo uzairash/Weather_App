@@ -28,9 +28,10 @@ pipeline {
         
         stage("Deploy") {
             steps {
-                def command = "docker pull uzair102/u_repo:${imageName} && docker run -d --name weather_app_container -p 4042:3000 uzair102/u_repo:${imageName}"
                 echo "Deploying the app..."
-                sh "ssh root@142.93.222.110 '${command}'"
+                sh """
+                    ssh root@142.93.222.110 'docker pull uzair102/u_repo:${imageName} && docker run -d --name weather_app_container -p 4042:3000 uzair102/u_repo:${imageName}'
+                """
             }
         }
     }
