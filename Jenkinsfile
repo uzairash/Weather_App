@@ -1,26 +1,32 @@
+def imageName = 'weather_app:v1.1'
+
 pipeline {
     agent any
+    
     stages {
         stage("Build") {
             steps {
-                echo 'building the application image....'
-                sh 'docker image build -t weather_app:v1.1 .'
+                echo 'Building the application image....'
+                sh "docker image build -t ${imageName} ."
             }
         }
+        
         stage("Test") {
             steps {
                 echo "Testing the app..."
             }
         }
-        stage("push to dockehub repository") {
+        
+        stage("Push to Docker Hub repository") {
             steps {
                 echo "Deploying the app..."
                 sh 'docker login'
-                sh 'docker tag weather_app:v1.1 uzair102/u_repo:weather_app-v1.1'
-                sh 'docker push uzair102/u_repo:weather_app-v1.1'
+                sh "docker tag ${imageName} uzair102/u_repo:${imageName}"
+                sh "docker push uzair102/u_repo:${imageName}"
             }
         }
-        stage("deploy") {
+        
+        stage("Deploy") {
             steps {
                 echo "Deploying the app..."
             }
