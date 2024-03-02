@@ -29,10 +29,13 @@ pipeline {
         stage("Deploy") {
             steps {
                 echo "Deploying the app..."
-                sh """
-                    ssh root@142.93.222.110 'docker pull uzair102/u_repo:${imageName} && docker run -d --name weather_app_container -p 4042:3000 uzair102/u_repo:${imageName}'
-                """
+                sshagent(['react-server-ssh']) {
+                    sh """
+                        ssh root@142.93.222.110 'docker pull uzair102/u_repo:${imageName} && docker run -d --name weather_app_container -p 4042:3000 uzair102/u_repo:${imageName}'
+                    """
+                }
             }
         }
+
     }
 }
