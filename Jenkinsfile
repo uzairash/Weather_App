@@ -16,7 +16,7 @@ pipeline {
             steps {
                 echo "Deploying the app..."
                 sh 'docker login'
-                sh 'docker tag 2e5bce271c22 weather_app:v1.1'
+                sh 'docker tag weather_app:v1.0 uzair102/u_repo:weather_app-v1.1'
                 sh 'docker push uzair102/u_repo:weather_app-v1.1'
             }
         }
