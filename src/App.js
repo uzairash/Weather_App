@@ -111,7 +111,7 @@ const App = () => {
   return (
     <div style={{ backgroundImage: `url(${getbg_img()})` }} className="Section1">
       <div className="container">
-        <h1>Forecast Now </h1>
+        <h1>Forecast Now !</h1>
         <div className="Searchbox">
           <input
             className="search-Box"
