@@ -4,7 +4,7 @@ pipeline {
         stage("Build") {
             steps {
                 echo 'building the application image'
-                sh 'docker image build -t weather_app:1.1 .'
+                sh 'docker image build -t weather_app:v1.1 .'
             }
         }
         stage("Test") {
