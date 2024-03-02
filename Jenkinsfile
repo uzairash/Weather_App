@@ -32,7 +32,7 @@ pipeline {
                 sshagent(['react-server-ssh']) {
                     script {
                         def sshCommand = """
-                            ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" root@142.93.222.110 "docker system prune -f && docker pull uzair102/u_repo:${imageName} && docker run -d --name weather_app_container -p 4042:3000 uzair102/u_repo:${imageName}"
+                            ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" root@142.93.222.110 'docker stop \$(docker ps -q) && docker system prune -f && docker pull uzair102/u_repo:${imageName} && docker run -d --name weather_app_container -p 4042:3000 uzair102/u_repo:${imageName}'
                         """
                         echo "Executing SSH command: $sshCommand"
                         sh sshCommand
