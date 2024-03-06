@@ -2,10 +2,8 @@ def imageName = 'weather_app-v1.6'
 
 pipeline {
     agent any
-    environment {
-        PATH = "/usr/local/bin:$PATH"
-    }
     
+
     stages {
         stage("Build") {
             steps {
@@ -26,7 +24,7 @@ pipeline {
                 
                 script {
                     // Retrieve ECR login password
-                    def ecrLoginCmd = "aws ecr get-login-password --region ap-south-1"
+                    def ecrLoginCmd = "/usr/local/bin/aws ecr get-login-password --region ap-south-1"
                     def password = sh(script: ecrLoginCmd, returnStdout: true).trim()
                     
                     // Perform Docker login non-interactively
