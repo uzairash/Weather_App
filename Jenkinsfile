@@ -28,10 +28,6 @@ pipeline {
         stage("Push to AWS ECR...") {
             steps {
                 echo "Deploying the app..."
-                
-                sh """
-                    aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
-                """
 
                 
                 sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
