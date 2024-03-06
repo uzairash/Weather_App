@@ -28,10 +28,10 @@ pipeline {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding' ,
                     credentialsId: 'credentials-aws',
-                    AWS_ACCESS_KEY_ID: 'AWS_ACCESS_KEY_ID',
+                    AWS_ACCESS_KEY_ID : 'AWS_ACCESS_KEY_ID',
                     AWS_SECRET_ACCESS_KEY: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                    sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+                    sh "docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
                 }
                 //sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
 
