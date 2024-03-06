@@ -3,14 +3,6 @@ def imageName = 'weather_app-v1.6'
 pipeline {
     agent any
 
-    environment {
-        // Credentials from Jenkins Credentials Store
-        AWS_ACCESS_KEY_ID = credentials('awsAccessKey')
-        AWS_SECRET_ACCESS_KEY = credentials('awsSecretKey')
-        AWS_REGION = 'ap-south-1' // Replace with your region
-        ECR_REGISTRY = '730335323304.dkr.ecr.ap-south-1.amazonaws.com'
-    }
-
     stages {
         stage("Build") {
             steps {
