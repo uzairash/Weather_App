@@ -2,7 +2,14 @@ def imageName = 'weather_app-v1.6'
 
 pipeline {
     agent any
-    
+
+    environment {
+        // Credentials from Jenkins Credentials Store
+        AWS_ACCESS_KEY_ID = credentials('awsAccessKey')
+        AWS_SECRET_ACCESS_KEY = credentials('awsSecretKey')
+        AWS_REGION = 'ap-south-1' // Replace with your region
+        ECR_REGISTRY = '730335323304.dkr.ecr.ap-south-1.amazonaws.com'
+    }
 
     stages {
         stage("Build") {
@@ -22,9 +29,9 @@ pipeline {
             steps {
                 echo "Deploying the app..."
                 
-                withAWS(credentials: 'd6656d75-8468-47ff-8096-3cb29c4e5e2b', region: 'ap-south-1') {
-                    sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                }
+                sh """
+                    aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+                """
 
                 
                 sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
