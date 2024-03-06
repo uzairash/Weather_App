@@ -21,10 +21,9 @@ pipeline {
             steps {
                 echo "Deploying the app..."
                 sh 'docker login'
-                // sh "docker tag ${imageName} uzair102/u_repo:${imageName}"
-                sh "docker tag weatcher_app:${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName}"
-                // sh "docker push uzair102/u_repo:${imageName}"
-                sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName}"
+                sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
+                sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
+
             }
         }
         
