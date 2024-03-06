@@ -25,18 +25,18 @@ pipeline {
             steps {
                 echo "Deploying the app..."
                 
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding' ,
-                    credentialsId: 'credentials-aws'
-                ]]) {
-                    sh '/usr/local/bin/aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
-                    sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                    sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
- 
-                   //sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
-                }
-                
+                // withCredentials([[
+                //     $class: 'AmazonWebServicesCredentialsBinding' ,
+                //     credentialsId: 'credentials-aws'
+                // ]]) {
+                //     sh 'docker login -u AWS --password-stdin < $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'  
 
+                //    //sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
+                // }
+                //sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+                sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
+                sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
+                sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 
             }
         }
