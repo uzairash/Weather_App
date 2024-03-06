@@ -34,7 +34,8 @@ pipeline {
                 //     sh "docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
                 // }
                 //sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                sh "docker login -u AWS -p \$($(aws ecr get-login-password --region ap-south-1)) 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+                sh "docker login -u AWS -p \"$(aws ecr get-login-password --region ap-south-1)\" 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+
 
                 sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
