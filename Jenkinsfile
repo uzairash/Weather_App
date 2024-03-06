@@ -3,8 +3,8 @@ def imageName = 'weather_app-v1.6'
 pipeline {
     agent any
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
     stages {
@@ -25,8 +25,17 @@ pipeline {
             steps {
                 echo "Deploying the app..."
                 
+                // withCredentials([[
+                //     $class: 'AmazonWebServicesCredentialsBinding' ,
+                //     credentialsId: 'aws_credentials',
+                //     AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID'
+                //     AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY'
+                    
+                // ]]) {
+                //     sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+                // }
                 sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                
+
                 sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
             }
