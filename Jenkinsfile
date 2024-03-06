@@ -22,17 +22,8 @@ pipeline {
             steps {
                 echo "Deploying the app..."
                 
-                script {
-                    // Retrieve ECR login password
-                    def ecrLoginCmd = "/usr/local/bin/aws ecr get-login-password --region ap-south-1"
-                    def password = sh(script: ecrLoginCmd, returnStdout: true).trim()
-                    
-                    // Perform Docker login non-interactively
-                    def dockerLoginCmd = "docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                    sh "echo ${password} | ${dockerLoginCmd}"
-                }
-                
-                // Tag and push the image
+               
+                sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
                 sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
             }
