@@ -2,10 +2,9 @@ def imageName = 'weather_app-v1.6'
 
 pipeline {
     agent any
-    // environment {
-    //     AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-    //     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    // }
+    environment {
+        PATH = "/path/to/awscli:$PATH"
+    }
 
     stages {
         stage("Build") {
@@ -30,13 +29,13 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding' ,
                     credentialsId: 'credentials-aws'
                 ]]) {
-                    sh 'docker login -u AWS --password-stdin < $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'  
-
+                    sh '/usr/local/bin/aws ecr get-login-password --region ap-south-1 | docker login -u AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
+                    sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+                    sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
+ 
                    //sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
                 }
-                //sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                //sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
-
+                
 
                 
             }
