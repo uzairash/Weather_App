@@ -54,7 +54,7 @@ pipeline {
                                 docker run -d --name weather_app_container -p 4042:3000 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}
                             '
                         """
-                        echo "Executing SSH command: $sshCommand"
+                        echo " Executing SSH command: $sshCommand"
                         sh sshCommand
                     }
                 }
