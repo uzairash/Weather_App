@@ -36,12 +36,13 @@ pipeline {
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]
                 ]) {
-                    sh "docker login --username AWS --password \${AWS_ACCESS_KEY_ID} \${AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+                    sh "docker login -u AWS -p \${AWS_SECRET_ACCESS_KEY} -e none https://730335323304.dkr.ecr.ap-south-1.amazonaws.com"
                     sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                     sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 }
             }
         }
+
 
         
         stage("Deploy") {
