@@ -3,7 +3,11 @@ def imageName = 'weather_app-v1.6'
 pipeline {
     agent any
     environment {
-        PATH = "/path/to/awscli:$PATH"
+        AWS_ACCOUNT_ID="730335323304"
+        AWS_DEFAULT_REGION="ap-south-1"
+        IMAGE_REPO_NAME="jenkins-pipeline"
+        IMAGE_TAG="v1"
+        REPOSITORY_URI = "730335323304.dkr.ecr.ap-south-1.amazonaws.com"
     }
 
     stages {
@@ -34,7 +38,7 @@ pipeline {
                 //    //sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-south-1) 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
                 // }
                 //sh "docker login --username AWS --password-stdin ${env.AWS_ACCESS_KEY_ID}:${env.AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com'
+                sh """aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"""
                 sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 
