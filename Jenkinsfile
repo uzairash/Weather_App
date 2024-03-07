@@ -46,16 +46,28 @@ pipeline {
                 sshagent(['react-server-ssh']) {
                     script {
                         def awsCredentials = credentials('aws-credentials') // Use the ID of the AWS credentials added in Jenkins
-                        def sshCommand = """
+
+                        withCredentials([
+                            [
+                                $class: 'AmazonWebServicesCredentialsBinding',
+                                credentialsId: 'aws-credentials',
+                                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                            ]
+                        ]) {
+                            def sshCommand = """
                             ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" root@142.93.222.110 '
-                                export AWS_ACCESS_KEY_ID=${awsCredentials.accessKey}
-                                export AWS_SECRET_ACCESS_KEY=${awsCredentials.secretKey}
+                                export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                                export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
                                 docker pull 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName} &&
                                 docker run -d --name weather_app_container -p 4042:3000 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName}
                             '
                         """
                         echo " Executing SSH command: $sshCommand"
                         sh sshCommand
+                        
+                        }
+                        
                     }
                 }
             }
