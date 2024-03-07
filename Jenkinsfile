@@ -1,4 +1,4 @@
-def imageName = 'weather_app-v1.8'
+def imageName = 'weather_app-v1.9'
 
 pipeline {
     agent any
