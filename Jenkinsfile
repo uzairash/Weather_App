@@ -47,8 +47,7 @@ pipeline {
                     script {
                         def sshCommand = """
                             ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" root@142.93.222.110 '
-                                docker stop \$(docker ps -q) &&
-                                docker system prune -f &&
+                               
                                 docker pull 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName} &&
                                 docker run -d --name weather_app_container -p 4042:3000 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName}
                             '
@@ -67,4 +66,5 @@ pipeline {
 // docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /var/jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 // docker run -p 8080:8080 -p 50000:50000 -d -v /var/run/docker.sock:/var/run/docker.sock -v /var/jenkins_home:/var/jenkins_home -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
             
-            
+//  docker stop \$(docker ps -q) &&
+//                                docker system prune -f &&
