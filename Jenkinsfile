@@ -56,14 +56,14 @@ pipeline {
                             ]
                         ]) {
                             def sshCommand = """
-                            ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" root@142.93.222.110 '
-                                AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com
-                                docker ps -q | xargs docker inspect -f '{{.Name}}' | xargs docker stop | xargs docker rm &&
-                                docker pull 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName} &&
-                                docker run -d --name ${imageName}-container -p 4042:3000 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName}
-                            '
-                        """
-                       
+                                ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" root@142.93.222.110 '
+                                    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com &&
+                                    docker ps -q | xargs docker inspect -f '{{.Name}}' | xargs -I {} docker stop {} && 
+                                    docker ps -q | xargs docker inspect -f '{{.Name}}' | xargs -I {} docker rm {} &&
+                                    docker pull 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName} &&
+                                    docker run -d --name ${imageName}-container -p 4042:3000 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName}
+                                '
+                            """
                         echo " Executing SSH command: $sshCommand"
                         sh sshCommand
                         
