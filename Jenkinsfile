@@ -63,6 +63,7 @@ pipeline {
                                 docker run -d --name weather_app_container -p 4042:3000 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app:${imageName}
                             '
                         """
+                        sh "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
                         echo " Executing SSH command: $sshCommand"
                         sh sshCommand
                         
