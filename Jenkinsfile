@@ -21,19 +21,20 @@ pipeline {
         stage("Push to AWS ECR...") {
             steps {
                 echo "Deploying the app..."
-                withCredentials([
-                    [
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'credentials-of-aws',
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                    ]
-                ]) {
-                    sh '/usr/local/bin/aws --version'
-                    // sh 'AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin -u https://730335323304.dkr.ecr.ap-south-1.amazonaws.com'
-                    // sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
-                    // sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
-                }
+                sh '/usr/local/bin/aws --version'
+                // withCredentials([
+                //     [
+                //         $class: 'AmazonWebServicesCredentialsBinding',
+                //         credentialsId: 'credentials-of-aws',
+                //         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                //         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                //     ]
+                // ]) {
+                    
+                //     // sh 'AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin -u https://730335323304.dkr.ecr.ap-south-1.amazonaws.com'
+                //     // sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
+                //     // sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
+                // }
             }
         }
 
