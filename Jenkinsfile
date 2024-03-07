@@ -28,21 +28,21 @@ pipeline {
         stage("Push to AWS ECR...") {
             steps {
                 echo "Deploying the app..."
-                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
-                    sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
+                withCredentials([
+                    [
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: 'credentials-of-aws',
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]
+                ]) {
+                    sh "docker login --username AWS --password \${AWS_ACCESS_KEY_ID} \${AWS_SECRET_ACCESS_KEY} 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
                     sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                     sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
                 }
-                // withAWS(credentials: 'ecr:af-south-1:credentials-aws', endpointUrl: '730335323304.dkr.ecr.ap-south-1.amazonaws.com/weatcher_app', region: 'ap-south-1') {
-                //     sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335323304.dkr.ecr.ap-south-1.amazonaws.com"
-                //     sh "docker tag ${imageName} 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
-                //     sh "docker push 730335323304.dkr.ecr.ap-south-1.amazonaws.com/weather_app:${imageName}"
-                // }
-                
-                
-                
             }
         }
+
         
         stage("Deploy") {
             steps {
