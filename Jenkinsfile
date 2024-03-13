@@ -5,8 +5,12 @@ pipeline {
     
     stages {
         stage('Increment Version') {
-            currentVersion = getVersion()
-            echo "current version : $currentVersion"
+            steps {
+                script {
+                    currentVersion = getVersion()
+                    echo "Updated Image Version: ${currentVersion}"
+                }
+            }
         }
         // stage("Build") {
         //     steps {
