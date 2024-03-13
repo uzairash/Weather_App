@@ -1,7 +1,6 @@
-def imageName = 'weather_app-v' 
-def imageVersion = readFile(file: 'version.txt')
-
 def getVersion() {
+    def imageName = 'weather_app-v' 
+    def imageVersion = readFile(file: 'version.txt')
     echo 'script.groovy file....'
     echo "image version"
     echo "image version ${imageVersion}"
