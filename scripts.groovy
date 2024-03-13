@@ -11,7 +11,7 @@
 // }
 
 def test() {
-    echo "executing pipeline fron branch $BRANCH_NAME"
+    echo "executing pipeline fron branch "
 }
 def buildJar() {
     echo 'Building the application ...'
