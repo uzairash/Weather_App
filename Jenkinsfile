@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-def currentVersion = ''
+def currentVersion
 def scripts
 
 pipeline {
@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     scripts = load "scripts.groovy"
-                    currentVersion = scripts.getVersion()
+                    def currentVersion = scripts.getVersion(readFile(file: 'version.txt').toInteger())
                     echo "Updated Image Version: ${currentVersion}"
                 }
             }
