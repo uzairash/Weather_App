@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-def currentVersion
+def imageName
 def gv
 
 pipeline {
