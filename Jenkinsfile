@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     gv = load "scripts.groovy"
-                    currentVersion = gv.getVersion()
+                    imageName = gv.getVersion()
                     echo "Updated Image Version: ${currentVersion}"
                 }
             }
