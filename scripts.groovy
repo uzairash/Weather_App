@@ -1,9 +1,8 @@
-def imageName = 'weather_app-v'
-def versionFilePath = 'version.txt'
-def imageVersion = readFile(file: versionFilePath).trim()
-
+def imageName = 'weather_app-v' 
+def imageVersion = readFile(file: 'version.txt')
 def getVersion() {
     echo 'script.groovy file '
+    imageVersion = imageVersion.toInteger()
     def (major, minor) = imageVersion.tokenize('.').collect { it.toInteger() }
     minor++
     imageVersion = "${major}.${minor}"
