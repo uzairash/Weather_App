@@ -11,7 +11,7 @@ pipeline {
                 script {
                     gv = load "scripts.groovy"
                     imageName = gv.getVersion()
-                    echo "Updated Image Version: ${currentVersion}"
+                    echo "Updated Image Version: ${imageName}"
                 }
             }
         }
