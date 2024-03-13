@@ -23,44 +23,9 @@ pipeline {
 
             }
         }
-        stage('build jar') {
-            when {
-                    expression {
-                        BRANCH_NAME == 'master'
-                    }
-                }
-            steps {
-                
-                script {
-                    gv.buildJar()
-                }
-
-            }
-        }
-        stage('build image') {
-            when {
-                    expression {
-                        BRANCH_NAME == 'master'
-                    }
-                }
-            steps {
-                
-                script {
-                    gv.buildImage()
-                    
-                }
-            }
-        }
-        stage('deploy') {
-            steps {
-                script {
-                    gv.deploy()
-                }
-            }
-        }
+        
     }
 }
-
 
 // #!/usr/bin/env groovy
 // def currentVersion
