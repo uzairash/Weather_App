@@ -1,4 +1,5 @@
 def currentVersion = ''
+def scripts = load "scripts.groovy"
 
 pipeline {
     agent any
@@ -7,7 +8,7 @@ pipeline {
         stage('Increment Version') {
             steps {
                 script {
-                    def scripts = load 'scripts.groovy'
+                    
                     currentVersion = scripts.getVersion()
                     echo "Updated Image Version: ${currentVersion}"
                 }
