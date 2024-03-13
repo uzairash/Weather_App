@@ -7,7 +7,8 @@ pipeline {
         stage('Increment Version') {
             steps {
                 script {
-                    currentVersion = getVersion()
+                    def scripts = load 'scripts.groovy'
+                    currentVersion = scripts.getVersion()
                     echo "Updated Image Version: ${currentVersion}"
                 }
             }
