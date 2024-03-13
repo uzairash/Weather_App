@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     scripts = load "scripts.groovy"
-                    currentVersion = scripts.getVersion(readFile(file: 'version.txt').toInteger())
+                    currentVersion = scripts.getVersion()
                     echo "Updated Image Version: ${currentVersion}"
                 }
             }
