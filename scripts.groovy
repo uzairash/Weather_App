@@ -3,6 +3,7 @@ def versionFilePath = 'version.txt'
 def imageVersion = readFile(file: versionFilePath).trim()
 
 def getVersion() {
+    echo 'script.groovy file '
     def (major, minor) = imageVersion.tokenize('.').collect { it.toInteger() }
     minor++
     imageVersion = "${major}.${minor}"
