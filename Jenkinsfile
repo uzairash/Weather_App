@@ -103,6 +103,7 @@ pipeline {
 
                         sh "git add ."
                         sh "git commit -m '[ci skip]ci: jenkins version modified'" 
+                        sh 'git status'
                         sh "git remote -v | grep origin || git remote add origin https://github.com/uzairash/Weather_App.git"
                         sh "git push -u origin config_AWS"
                     }            
