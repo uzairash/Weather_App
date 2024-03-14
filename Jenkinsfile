@@ -98,6 +98,9 @@ pipeline {
                 echo "Update commit..."
                 sshagent(['ssh-to-github']) {
                     withCredentials([gitUsernamePassword(credentialsId: 'github-credentials', gitToolName: 'Default')]) {
+                        sh "git config user.email 'uzairashfaq90@gmail.com"
+                        sh "git config user.name 'uzairash'"
+
                         sh "git add ."
                         sh "git commit -m '[ci skip]ci: jenkins version modified'" 
                         sh "git remote add origin git@github.com:uzairash/Weather_App.git"
