@@ -101,13 +101,13 @@ pipeline {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
                         sh "git config user.name 'uzairash'"
 
-                        sh "git pull"
+                        
                         // Add changes to the index
                         sh "git add ."
-
+                        
                         // Commit changes
                         sh "git commit -m '[ci skip]ci: jenkins version modified'"
-
+                        sh "git pull"
                         // Fetch latest changes from the remote repository
                         sh "git fetch origin"
 
