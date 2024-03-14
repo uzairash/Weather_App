@@ -101,18 +101,31 @@ pipeline {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
                         sh "git config user.name 'uzairash'"
 
+                        // Add changes to the index
                         sh "git add ."
-                        sh "git commit -m '[ci skip]ci: jenkins version modified'" 
+
+                        // Commit changes
+                        sh "git commit -m '[ci skip]ci: jenkins version modified'"
+
+                        // Fetch latest changes from the remote repository
                         sh "git fetch origin"
-                        sh "git checkout config_AWS"
-                        sh 'git status'
+
+                        // Check out or create the config_AWS branch
+                        sh "git checkout -b config_AWS origin/config_AWS || git checkout config_AWS"
+
+                        // Print current branch status
+                        sh "git status"
+
+                        // Set the remote URL if not already set
                         sh "git remote -v | grep origin || git remote add origin git@github.com:uzairash/Weather_App.git"
+
+                        // Push changes to the config_AWS branch
                         sh "git push -u origin config_AWS"
                     }            
                 }
-                
             }
         }
+
 
 
     }
