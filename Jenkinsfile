@@ -7,6 +7,12 @@ pipeline {
     agent any
     
     stages {
+        stage('Checkout') {
+            steps {
+                scmSkip(deleteBuild: true, skipPattern:'.*\\[ci skip\\].*')
+            }
+        }
+
         stage('Increment Version') {
             steps {
                 script {
@@ -93,7 +99,7 @@ pipeline {
                 sshagent(['ssh-to-github']) {
                     withCredentials([gitUsernamePassword(credentialsId: 'github-credentials', gitToolName: 'Default')]) {
                         sh "git add ."
-                        sh "git commit -m 'ci: jenkins version modified'" 
+                        sh "git commit -m '[ci skip]ci: jenkins version modified'" 
                         sh "git remote add origin git@github.com:uzairash/Weather_App.git"
                         sh "git push -u origin config_AWS"
                     }            
