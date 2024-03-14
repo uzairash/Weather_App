@@ -101,6 +101,7 @@ pipeline {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
                         sh "git config user.name 'uzairash'"
 
+                        sh "git pull"
                         // Add changes to the index
                         sh "git add ."
 
@@ -113,8 +114,6 @@ pipeline {
                         // Check out or create the config_AWS branch
                         sh "git checkout -b config_AWS origin/config_AWS || git checkout config_AWS"
                         
-                        sh "git pull"
-
                         // Print current branch status
                         sh "git status"
 
