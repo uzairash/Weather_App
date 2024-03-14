@@ -106,7 +106,7 @@ pipeline {
                         sh "git fetch origin"
                         sh "git checkout config_AWS"
                         sh 'git status'
-                        sh "git remote -v | grep origin || git remote add origin https://github.com/uzairash/Weather_App.git"
+                        sh "git remote -v | grep origin || git remote add origin git@github.com:uzairash/Weather_App.git"
                         sh "git push -u origin config_AWS"
                     }            
                 }

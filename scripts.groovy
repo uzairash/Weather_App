@@ -11,6 +11,8 @@ def getVersion() {
     minor++
     imageVersion = "${major}.${minor}"
     writeFile(file: versionFilePath, text: imageVersion) // Update version in the file
+    def print = readFile(file: versionFilePath)
+    echo "after writing ${print}"
     return "${imageName}${imageVersion}"
 }
 return this
