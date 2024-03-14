@@ -119,7 +119,7 @@ pipeline {
                         sh "git status"
 
                         // Set the remote URL if not already set
-                        sh "git remote -v | grep origin || git remote add origin git@github.com:uzairash/Weather_App.git"
+                        sh "git remote set-url origin git@github.com:uzairash/Weather_App.git"
 
                         // Push changes to the config_AWS branch
                         sh "git push -u origin config_AWS"
