@@ -2,6 +2,7 @@
 def imageName
 def gv
 
+
 pipeline {
     agent any
     
@@ -82,6 +83,22 @@ pipeline {
                         
                     }
                 }
+            }
+        }
+
+
+        stage("Update commit") {
+            steps {
+                echo "Update commit..."
+                sshagent(['ssh-to-github']) {
+                    withCredentials([gitUsernamePassword(credentialsId: 'github-credentials', gitToolName: 'Default')]) {
+                        sh "git add ."
+                        sh "git commit -m 'ci: jenkins version modified'" 
+                        sh "git remote add origin git@github.com:uzairash/Weather_App.git"
+                        sh "git push -u origin config_AWS"
+                    }            
+                }
+                
             }
         }
 
