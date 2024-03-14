@@ -112,6 +112,8 @@ pipeline {
 
                         // Check out or create the config_AWS branch
                         sh "git checkout -b config_AWS origin/config_AWS || git checkout config_AWS"
+                        
+                        sh "git pull"
 
                         // Print current branch status
                         sh "git status"
