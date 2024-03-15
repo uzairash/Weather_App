@@ -113,16 +113,17 @@ pipeline {
                         // Commit changes
                         sh "git commit -m '[ci skip]'"
 
-                        // Create and switch to the config_AWS branch
-                        def branchExists = sh(script: "git rev-parse --verify config_AWS", returnStatus: true) == 0
-                        if (!branchExists) {
-                            // Create and switch to the config_AWS branch if it doesn't exist
-                            sh "git checkout -b config_AWS"
-                        } else {
-                            // If the branch exists, switch to it
-                            sh "git checkout config_AWS"
+                        // Check if config_AWS branch exists locally
+                        script {
+                            def branchExists = sh(script: "git rev-parse --verify config_AWS", returnStatus: true) == 0
+                            if (!branchExists) {
+                                // Create and switch to the config_AWS branch if it doesn't exist
+                                sh "git checkout -b config_AWS"
+                            } else {
+                                // If the branch exists, switch to it
+                                sh "git checkout config_AWS"
+                            }
                         }
-                        
 
                         // Pull latest changes from the remote config_AWS branch
                         sh "git pull origin config_AWS"
