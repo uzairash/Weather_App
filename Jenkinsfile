@@ -111,7 +111,7 @@ pipeline {
 
 
                         // Commit changes
-                        sh "git commit -m '[ci skip]ci: jenkins version modified'"
+                        sh "git commit -m '[ci skip]'"
 
                         // Pull latest changes from the remote config_AWS branch
                         sh "git pull origin config_AWS"
