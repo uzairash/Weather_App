@@ -114,15 +114,13 @@ pipeline {
                         // Pull latest changes from the remote config_AWS branch
                         sh "git pull origin config_AWS"
                         
-                        // Print current branch status
-                        sh "git status"
-
                         // Push changes to the config_AWS branch
                         sh "git push -u origin config_AWS"
                     }            
                 }
             }
         }
+
 
     }
 }
