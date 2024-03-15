@@ -96,7 +96,7 @@ pipeline {
         stage("Update commit") {
             steps {
                 echo "Update commit..."
-                sshagent(['ssh-to-github']) {
+                sshagent(['jenkins-ssh-github']) {
                     withCredentials([gitUsernamePassword(credentialsId: 'github-credentials', gitToolName: 'Default')]) {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
                         sh "git config user.name 'uzairash'"
