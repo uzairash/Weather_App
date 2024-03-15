@@ -107,18 +107,17 @@ pipeline {
 
                         sh "git remote set-url origin git@github.com:uzairash/Weather_App.git"
 
+                        // Check out or create the config_AWS branch
+                        sh "git checkout config_AWS"
+
                         // Commit changes
                         sh "git commit -m '[ci skip]ci: jenkins version modified'"
 
                         // Pull latest changes from the remote config_AWS branch
                         sh "git pull origin config_AWS"
                         
-                        
-                        // Check out or create the config_AWS branch
-                        sh "git checkout config_AWS"
-
                         // Push changes to the config_AWS branch
-                        sh "git push -u origin config_AWS"
+                        sh "git push -f origin config_AWS"
                     }            
                 }
             }
