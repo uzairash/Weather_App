@@ -101,6 +101,9 @@ pipeline {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
                         sh "git config user.name 'uzairash'"
 
+                        // Commit changes
+                        sh "git commit -m '[ci skip]ci: jenkins version modified'"
+
                         // Pull latest changes from the remote config_AWS branch
                         sh "git pull origin config_AWS"
                         
@@ -111,9 +114,6 @@ pipeline {
                         
                         // Add changes to the index
                         sh "git add ."
-                        
-                        // Commit changes
-                        sh "git commit -m '[ci skip]ci: jenkins version modified'"
                         
                         // Push changes to the config_AWS branch
                         sh "git push -u origin config_AWS"
