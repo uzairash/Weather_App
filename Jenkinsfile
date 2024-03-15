@@ -101,19 +101,22 @@ pipeline {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
                         sh "git config user.name 'uzairash'"
 
+                        // Add changes to the index
+                        sh "git add ."
+
+
+                        sh "git remote set-url origin git@github.com:uzairash/Weather_App.git"
+                        
                         // Commit changes
                         sh "git commit -m '[ci skip]ci: jenkins version modified'"
 
                         // Pull latest changes from the remote config_AWS branch
-                        sh "git pull origin config_AWS"
+                        //sh "git pull origin config_AWS"
                         
-                        sh "git remote set-url origin git@github.com:uzairash/Weather_App.git"
+                        
                         
                         // Check out or create the config_AWS branch
-                        sh "git checkout -b config_AWS origin/config_AWS || git checkout config_AWS"
-                        
-                        // Add changes to the index
-                        sh "git add ."
+                        //sh "git checkout -b config_AWS origin/config_AWS || git checkout config_AWS"
                         
                         // Push changes to the config_AWS branch
                         sh "git push -u origin config_AWS"
