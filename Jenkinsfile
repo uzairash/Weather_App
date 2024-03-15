@@ -20,7 +20,10 @@ pipeline {
         stage("Push to Docker Hub repository") {
             steps {
                 echo "Deploying the app..."
-                sh 'docker login'
+                withCredentials([usernamePassword(credentialsId: 'docker-credentials-pipeline', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh "echo ${DOCKER_PASSWORD}| docker login --username ${DOCKER_USERNAME} --password-stdin"
+                }
+                
                 sh "docker tag ${imageName} uzair102/u_repo:${imageName}"
                 sh "docker push uzair102/u_repo:${imageName}"
             }
