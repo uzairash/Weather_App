@@ -113,6 +113,9 @@ pipeline {
                         // Commit changes
                         sh "git commit -m '[ci skip]'"
 
+                        // Create and switch to the config_AWS branch
+                        sh "git checkout -b config_AWS"
+
                         // Pull latest changes from the remote config_AWS branch
                         sh "git pull origin config_AWS"
                         
