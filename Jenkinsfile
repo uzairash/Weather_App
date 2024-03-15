@@ -95,7 +95,7 @@ pipeline {
 
         stage("Update commit") {
             steps {
-                echo "Update commit..."
+                echo "Update commit...."
                 sshagent(['jenkins-ssh-github']) {
                     withCredentials([gitUsernamePassword(credentialsId: 'github-credentials', gitToolName: 'Default')]) {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
@@ -117,7 +117,7 @@ pipeline {
                         sh "git pull origin config_AWS"
                         
                         // Push changes to the config_AWS branch
-                        sh "git push -f origin config_AWS"
+                        sh "git push -u origin config_AWS"
                     }            
                 }
             }
