@@ -109,8 +109,6 @@ pipeline {
 
                         sh 'git status'
 
-                        // Check out or create the config_AWS branch
-                        //sh "git checkout config_AWS"
 
                         // Commit changes
                         sh "git commit -m '[ci skip]ci: jenkins version modified'"
