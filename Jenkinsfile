@@ -1,7 +1,24 @@
-def imageName = 'weather_app-v1.5'
+#!/usr/bin/env groovy
+def imageName
+def gv
 
 pipeline {
     agent any
+    stage('Checkout') {
+        steps {
+            scmSkip(deleteBuild: true, skipPattern:'.*\\[ci skip\\].*')
+        }
+    }
+    
+    stage('Increment Version') {
+        steps {
+            script {
+                gv = load "scripts.groovy"
+                imageName = gv.getVersion()
+                echo "Updated Image Version: ${imageName}"
+            }
+        }
+    }
     
     stages {
         stage("Build") {
@@ -40,6 +57,43 @@ pipeline {
                         echo "Executing SSH command: $sshCommand"
                         sh sshCommand
                     }
+                }
+            }
+        }
+
+        stage("Update commit") {
+            steps {
+                echo "Update commit...."
+                sshagent(['jenkins-ssh-github']) {
+                    withCredentials([gitUsernamePassword(credentialsId: 'github-credentials', gitToolName: 'Default')]) {
+                        sh "git config user.email 'uzairashfaq90@gmail.com'"
+                        sh "git config user.name 'uzairash'"
+
+                        
+                        sh "git add ."
+                        sh "git remote set-url origin git@github.com:uzairash/Weather_App.git"
+                        sh 'git status'
+                        // Commit changes
+                        sh "git commit -m '[ci skip]'"
+
+                        // Check if master branch exists locally
+                        script {
+                            def branchExists = sh(script: "git rev-parse --verify master", returnStatus: true) == 0
+                            if (!branchExists) {
+                                // Create and switch to the master branch if it doesn't exist
+                                sh "git checkout -b master"
+                            } else {
+                                // If the branch exists, switch to it
+                                sh "git checkout master"
+                            }
+                        }
+
+                        // Pull latest changes from the remote master branch
+                        sh "git pull origin master"
+                        
+                        // Push changes to the master branch
+                        sh "git push -u origin master"
+                    }            
                 }
             }
         }
