@@ -101,15 +101,10 @@ pipeline {
                         sh "git config user.email 'uzairashfaq90@gmail.com'"
                         sh "git config user.name 'uzairash'"
 
-                        // Add changes to the index
+                        
                         sh "git add ."
-
-
                         sh "git remote set-url origin git@github.com:uzairash/Weather_App.git"
-
                         sh 'git status'
-
-
                         // Commit changes
                         sh "git commit -m '[ci skip]'"
 
