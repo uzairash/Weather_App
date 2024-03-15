@@ -4,23 +4,25 @@ def gv
 
 pipeline {
     agent any
-    stage('Checkout') {
-        steps {
-            scmSkip(deleteBuild: true, skipPattern:'.*\\[ci skip\\].*')
-        }
-    }
     
-    stage('Increment Version') {
-        steps {
-            script {
-                gv = load "scripts.groovy"
-                imageName = gv.getVersion()
-                echo "Updated Image Version: ${imageName}"
+    
+        stages {
+            stage('Checkout') {
+            steps {
+                scmSkip(deleteBuild: true, skipPattern:'.*\\[ci skip\\].*')
             }
         }
-    }
-    
-    stages {
+
+        stage('Increment Version') {
+            steps {
+                script {
+                    gv = load "scripts.groovy"
+                    imageName = gv.getVersion()
+                    echo "Updated Image Version: ${imageName}"
+                }
+            }
+        }
+        
         stage("Build") {
             steps {
                 echo 'Building the application image....'
